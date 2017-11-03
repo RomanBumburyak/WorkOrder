@@ -1,34 +1,42 @@
 public class WorkOrder {
-
-    private int id;
+    int id;
     private String description;
     private String senderName;
     private Status status;
     private static int nextId = 0;
 
-    public WorkOrder{
-        this.id = getAndIncrementNextId();
+
+    public WorkOrder() {
+        this.id = getNextId();
     }
 
-    public WorkOrder(int id, String description, String senderName, Status status) {
-        this.id = getAndIncrementNextId();   //This will get your next ID:
+    public WorkOrder(String description, String senderName, Status status) {
+        this.id = getNextId();
         this.description = description;
         this.senderName = senderName;
         this.status = status;
     }
-
-    @Override
-    public int hashCode() {
-        return id();
+    private static int getNextId(){
+        return nextId ++;
     }
-
     public int getId() {
         return id;
     }
 
+    //////////////////////////////////////////
+
+    //I setup the setters for the ID, but I do not know if I need them
+
     public void setId(int id) {
         this.id = id;
     }
+
+    public static void setNextId(int nextId) {
+        WorkOrder.nextId = nextId;
+    }
+
+    //////////////////////////////////////////
+
 
     public String getDescription() {
         return description;
@@ -54,11 +62,19 @@ public class WorkOrder {
         this.status = status;
     }
 
-    public static int getAndIncrementNextId() {
-        return nextId ++ ;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        WorkOrder workOrder = (WorkOrder) o;
+
+        return id == workOrder.id;
     }
 
-//    public static void setNextId(int nextId) {
-//        WorkOrder.nextId = nextId;
-//    }
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }
